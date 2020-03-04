@@ -111,8 +111,7 @@ Follow this guide here step-by-step: https://github.com/DataDog/integrations-cor
 However, if you run into an issue with the `datadog-agent` unable to read the Nginx log files with a `permission denied` error, you'll need to modify the permission of the logs.
 
 ```
-sudo chmod +644 /var/log/nginx/error.log
-sudo chmod +644 /var/log/nginx/access.log
+sudo chmod -R +644 /var/log/nginx/
 ```
 
 Permission `0644` indicates that files are readable/writeable by the file's owner and *only readable* by everyone else. 
