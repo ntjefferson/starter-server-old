@@ -115,3 +115,5 @@ sudo chmod -R +644 /var/log/nginx/
 ```
 
 Permission `0644` indicates that files are readable/writeable by the file's owner and *only readable* by everyone else. 
+
+Also, since Nginx relies on `logrotate`, you need to go into `/etc/logrotate.d/nginx` and change the auto provisioned logs to permission `0644`.
