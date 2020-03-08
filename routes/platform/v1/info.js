@@ -1,11 +1,17 @@
 const express = require("express");
-const router = express.Router();
 const jwt = require("jsonwebtoken");
 const firebaseAdmin = require("../../../config/firebase");
 const admin = require("firebase-admin");
 
-router.post("/info", (req, res, next) => {
+const info = async (req, res, next) => {
   const { token } = req.body;
+
+  if (!token) {
+    let err = new Error("Missing required field(s).");
+    err.status = 400;
+    err.required = [{ field: "token" }];
+    throw err;
+  }
 
   admin
     .auth()
@@ -16,12 +22,11 @@ router.post("/info", (req, res, next) => {
       // Query and get account information here
       // Make sure to handle error in query
 
-
       // Sign JWT token
       jwt.sign(
         {
-            // Don't forget to use custom sign, this is only an example
-            example: "example"
+          // Don't forget to use custom sign, this is only an example
+          example: "example"
         },
         // This fields needs to be populated, only have example in .env
         process.env.JWT_SECRET,
@@ -31,11 +36,7 @@ router.post("/info", (req, res, next) => {
           res.status(200).json(token);
         }
       );
-      // ...
-    })
-    .catch((error) => {
-      // Handle error
     });
-  });
+};
 
-module.exports = router;
+module.exports = info;
